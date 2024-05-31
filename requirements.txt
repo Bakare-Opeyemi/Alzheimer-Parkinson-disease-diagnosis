@@ -1,0 +1,7 @@
+pandas
+numpy
+streamlit
+watchdog
+keras==2.15.0
+tensorflow==2.15.0
+scikit-image
