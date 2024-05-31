@@ -12,13 +12,13 @@ def load_models():
     """
     Load models
     """
-    mobilenet_model = load_model('models/skin_cancer_mobilenet.keras')
+    mobilenet_model = load_model('models/mobilenet.keras')
     
     return mobilenet_model
 
 model = load_models()
 
-decodePrediction = {0:"benign or non-cancerous", 1:"malignant or cancerous" }
+decodePrediction = {0:"neither", 1:"Alzheimer's", 2:"Parkinson's" }
 
 def preprocessImage(image):
     img_array= imread(image) 
@@ -31,10 +31,10 @@ def preprocessImage(image):
 
 
 def main():
-    st.title('Skin Cancer Classification')
+    st.title("Alzheimer's Disease Diagnosis")
     html_temp = """
-    <div style="background:#051733 ;padding:10px">
-    <h2 style="color:white;text-align:center;">Cancerous Lesion Detection</h2>
+    <div style="background:#4287f5 ;padding:10px">
+    <h2 style="color:white;text-align:center;">Diagnostic Tool</h2>
     </div>
     """
 
@@ -42,15 +42,15 @@ def main():
     st.divider()
 
     html_temp2 = """
-    <div style="background:#14302f ;padding:10px">
-    <p style="color:white;text-align:left;">This project aims to detect cancerous skin lesions from images </p>
+    <div style="background:#727c8c ;padding:10px">
+    <p style="color:white;text-align:left;">This project aims to detect both Alzheimer's and Parkinson's diseases from brain MRI images </p>
     <p style="color:white;text-align:left;"><b> </b><p>
     <p style="color:white;text-align:left;"> </p>
     </div>
     """
     st.markdown(html_temp2, unsafe_allow_html = True)
     st.divider()
-    infraredImage = st.file_uploader("Upload an image of the skin lesion", type=["jpg", "jpeg", "png"], accept_multiple_files = False)
+    infraredImage = st.file_uploader("Upload a brain MRI image", type=["jpg", "jpeg", "png"], accept_multiple_files = False)
     
     if st.button('Identify Fault'):
         print('preprocessing image....')
@@ -70,7 +70,7 @@ def main():
 
         # Show the prediction
         st.write("Prediction:", prediction)
-        st.success('The skin lesion uploaded is '+ decodePrediction[prediction] + '. I have '+ str(pred_probs) + '% confidence in my prediction')
+        st.success('The MRI uploaded is indicative of a person with '+ decodePrediction[prediction] + ' disease. I have '+ str(pred_probs) + '% confidence in my prediction')
     
     # st.divider()
     # dataset = st.file_uploader("Upload a csv dataset of reddit comments. Comments must be in a 'comments' column", type=["csv"], accept_multiple_files = False)
